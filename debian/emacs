@@ -1,0 +1,37 @@
+;; Config directory
+(add-to-list 'load-path "~/.emacs.d/lisp")
+(load-file "~/.emacs.d/lisp/std_comment.el")
+
+;; ShortCut
+(global-set-key (kbd "C-c r") 'replace-string)
+(global-set-key (kbd "C-c g") 'goto-line)
+(global-set-key (kbd "C-c n") 'normal-mode)
+(global-set-key (kbd "C-c x") 'hexl-mode)
+
+;; Indentation
+(setq-default c-basic-offset 4)
+(setq-default tab-width 4)
+(setq-default indent-tabs-mode t)
+(c-set-offset 'substatement-open 0)
+
+;; Smooth Emacs
+(setq scroll-step 1)
+(delete-selection-mode 1)
+(define-key input-decode-map "\e[1;2A" [S-up])
+(show-paren-mode 1)
+(menu-bar-mode 0)
+
+;; Line and Column
+(global-linum-mode 1)
+(setq linum-format "%3d\u2502")
+(setq line-number-mode 1)
+(setq column-number-mode 1)
+
+;; Delete whitespaces while saving
+(add-hook 'before-save-hook 'delete-trailing-whitespace)
+
+;; PHP Mode
+(autoload 'php-mode "php-mode" "Major mode for editing PHP code." t)
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
+(add-to-list 'auto-mode-alist '("\\.inc$" . php-mode))
+(load-file "~/.emacs.d/lisp/php-mode.el")

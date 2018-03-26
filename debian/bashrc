@@ -1,0 +1,64 @@
+shopt -s histappend
+shopt -s checkwinsize
+unset color_prompt force_color_prompt
+ulimit -c 0
+
+export SAVEHIST=1000
+export HISTSIZE=1000
+export HISTFILESIZE=2000
+export HISTCONTROL=ignoredups:ignorespace
+
+export PS1=$'\e[2;32m[\e[0;95m\w $((($?)) && echo "\e[1;31m" || echo "\e[1;32m")\#\e[2;32m]\e[0;39m'
+export PATH="$PATH:~/bin:/usr/site/sbin:/usr/site/bin:/usr/school/bin"
+export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:~/lib/:./"
+export EDITOR='emacs'
+export PAGER='less'
+export WATCH='all'
+
+# Color Alias
+alias ls='ls --color=auto'
+alias grep='grep --color=auto'
+alias fgrep='fgrep --color=auto'
+alias egrep='egrep --color=auto'
+
+# Basic Alias
+alias ne='emacs -nw'
+alias j='jobs'
+alias c='clear'
+alias tgz='tar czvf'
+alias untgz='tar xzvf'
+
+# Custom Alias
+alias ll='ls -l'
+alias la='ls -a'
+alias crll='clear ; ls -l'
+alias crla='clear ; ls -la'
+alias clean='rm -f *~ ; rm -f .*~ ; rm -f \#* ; rm -f *.o'
+alias ccll='clean && crll'
+alias mkj='make -j'
+
+# Git Alias
+alias gs='git status'
+alias ga='git add'
+alias gf='git fetch'
+alias gm='git merge'
+alias gc='git commit'
+alias go='git checkout'
+alias gb='git branch'
+alias gd='git diff'
+alias gl='git log'
+alias grt='git remote'
+alias grb='git rebase'
+alias gps='git push'
+alias gpl='git pull'
+alias gcl='git clone'
+
+# Util Alias
+alias myalias='ne ~/.bashrc && source ~/.bashrc && rm -f ~/.bashrc~'
+alias myemacs='ne ~/.emacs && rm -f ~/.emacs~'
+alias xlock='xlock -mode matrix'
+alias down='sudo poweroff'
+
+if [ -f $HOME/.mybashrc ]; then
+    . $HOME/.mybashrc
+fi
