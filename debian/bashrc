@@ -1,19 +1,47 @@
+ulimit -s unlimited
+
 shopt -s histappend
 shopt -s checkwinsize
 unset color_prompt force_color_prompt
-ulimit -c 0
 
 export SAVEHIST=1000
 export HISTSIZE=1000
 export HISTFILESIZE=2000
 export HISTCONTROL=ignoredups:ignorespace
 
-export PS1=$'\e[2;32m[\e[0;95m\w $((($?)) && echo "\e[1;31m" || echo "\e[1;32m")\#\e[2;32m]\e[0;39m'
-export PATH="$PATH:~/bin:/usr/site/sbin:/usr/site/bin:/usr/school/bin"
+function my_git_ps1() {
+    if (git rev-parse &> /dev/null); then
+	git status -uno 2> /dev/null | grep 'modified:\|deleted:\|detached' &> /dev/null && echo -ne "\e[2;39m *" || echo -ne " "
+	echo -ne "\e[0;31m$(git rev-parse --abbrev-ref HEAD)"
+    fi
+}
+
+export PS1=$'\[\e[0;32m\][\[\e[0;33m\]$? \[\e[2;39m\]\u\[\e[0;39m\]@\[\e[2;39m\]\h \[\e[0;95m\]\w$(my_git_ps1)\[\e[0;32m\]]\[\e[0;39m\]\n$ '
+export PATH=$PATH:$HOME/bin
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:~/lib/:./"
-export EDITOR='emacs'
+export EDITOR='emacs -nw'
 export PAGER='less'
 export WATCH='all'
+
+# Git Alias
+alias gitf='git fetch --all'
+alias gitr='git rebase'
+alias gitb='git branch'
+alias gito='git checkout'
+alias gits='git status -uno'
+alias gitl='git log'
+alias gitd='git diff'
+alias gita='git add'
+alias gitc='git commit'
+alias gitp='git push'
+
+alias gitpf='git push --force-with-lease'
+
+alias gitsub='git submodule'
+alias gitsup='git submodule update'
+
+alias gup='git fetch --all && git rebase origin/main'
+alias gclean='git clean -fdx'
 
 # Color Alias
 alias ls='ls --color=auto'
@@ -21,44 +49,25 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 
-# Basic Alias
+alias tree='tree -C'
+
+# Custom Alias
 alias ne='emacs -nw'
 alias j='jobs'
 alias c='clear'
-alias tgz='tar czvf'
-alias untgz='tar xzvf'
+alias tgz='tar -czvf'
+alias untgz='tar -xzvf'
 
-# Custom Alias
 alias ll='ls -l'
-alias la='ls -a'
-alias crll='clear ; ls -l'
-alias crla='clear ; ls -la'
-alias clean='rm -f *~ ; rm -f .*~ ; rm -f \#* ; rm -f *.o'
-alias ccll='clean && crll'
+alias la='ls -lA'
 alias mkj='make -j'
 
-# Git Alias
-alias gs='git status'
-alias ga='git add'
-alias gf='git fetch'
-alias gm='git merge'
-alias gc='git commit'
-alias go='git checkout'
-alias gb='git branch'
-alias gd='git diff'
-alias gl='git log'
-alias grt='git remote'
-alias grb='git rebase'
-alias gps='git push'
-alias gpl='git pull'
-alias gcl='git clone'
+alias crll='clear ; ll'
+alias crla='clear ; la'
+alias clean='rm -f *~ ; rm -f .*~ ; rm -f \#* ; rm -f .\#* ; rm -f *.o'
+alias ccll='clean && crll'
 
-# Util Alias
+# Conf Alias
 alias myalias='ne ~/.bashrc && source ~/.bashrc && rm -f ~/.bashrc~'
 alias myemacs='ne ~/.emacs && rm -f ~/.emacs~'
-alias xlock='xlock -mode matrix'
-alias down='sudo poweroff'
-
-if [ -f $HOME/.mybashrc ]; then
-    . $HOME/.mybashrc
-fi
+alias mygconf='ne ~/.gitconfig && rm -f ~/.gitconfig~'
