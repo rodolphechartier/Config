@@ -23,6 +23,10 @@ export EDITOR='emacs -nw'
 export PAGER='less'
 export WATCH='all'
 
+# Cd Alias
+alias cdssh='cd ~/.ssh'
+alias cdprg='cd ~/Programming'
+
 # Git Alias
 alias gitf='git fetch --all'
 alias gitr='git rebase'
