@@ -1,6 +1,9 @@
 ;; Config directory
 (add-to-list 'load-path "~/.emacs.d/lisp/")
 
+;; Theme
+(load-theme 'manoj-dark)
+
 ;; ShortCut
 (global-set-key (kbd "C-c r") 'replace-string)
 (global-set-key (kbd "C-c g") 'goto-line)
