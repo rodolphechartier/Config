@@ -12,12 +12,12 @@ export HISTCONTROL=ignoredups:ignorespace
 function my_git_ps1() {
     if (git rev-parse &> /dev/null); then
 	git status -uno 2> /dev/null | grep 'modified:\|deleted:\|detached' &> /dev/null && echo -ne "\e[2;39m *" || echo -ne " "
-	echo -ne "\e[0;31m$(git rev-parse --abbrev-ref HEAD)"
+	echo -ne "\e[0;31m$(gcurb)"
     fi
 }
 
 export PS1=$'\[\e[0;32m\][\[\e[0;33m\]$? \[\e[2;39m\]\u\[\e[0;39m\]@\[\e[2;39m\]\h \[\e[0;95m\]\w$(my_git_ps1)\[\e[0;32m\]]\[\e[0;39m\]\n$ '
-export PATH=$PATH:$HOME/bin
+export PATH="$HOME/.local/bin:$HOME/bin:$PATH"
 export LD_LIBRARY_PATH="$LD_LIBRARY_PATH:~/lib/:./"
 export EDITOR='emacs -nw'
 export PAGER='less'
@@ -28,24 +28,44 @@ alias cdssh='cd ~/.ssh'
 alias cdprg='cd ~/Programming'
 
 # Git Alias
-alias gitf='git fetch --all'
-alias gitr='git rebase'
 alias gitb='git branch'
 alias gito='git checkout'
-alias gits='git status -uno'
+alias gitr='git rebase'
+alias gitm='git merge'
 alias gitl='git log'
 alias gitd='git diff'
 alias gita='git add'
 alias gitc='git commit'
 alias gitp='git push'
 
+alias gitf='git fetch --all'
+alias gits='git status -uno'
 alias gitpf='git push --force-with-lease'
 
 alias gitsub='git submodule'
 alias gitsup='git submodule update'
 
-alias gup='git fetch --all && git rebase origin/main'
+alias gcurb='git rev-parse --abbrev-ref HEAD'
+alias gup='git fetch --all && git rebase origin/$(gcurb)'
+alias gprune='git remote prune origin'
 alias gclean='git clean -fdx'
+
+# Git completions
+if [ -f "/usr/share/bash-completion/completions/git" ]; then
+    source /usr/share/bash-completion/completions/git
+
+    __git_complete gitb _git_branch
+    __git_complete gito _git_checkout
+    __git_complete gitr _git_rebase
+    __git_complete gitm _git_merge
+    __git_complete gitl _git_log
+    __git_complete gitd _git_diff
+    __git_complete gita _git_add
+    __git_complete gitc _git_commit
+    __git_complete gitp _git_push
+else
+    echo "Error loading git completions"
+fi
 
 # Color Alias
 alias ls='ls --color=auto'
@@ -70,6 +90,9 @@ alias crll='clear ; ll'
 alias crla='clear ; la'
 alias clean='rm -f *~ ; rm -f .*~ ; rm -f \#* ; rm -f .\#* ; rm -f *.o'
 alias ccll='clean && crll'
+
+alias dksize='du -sh'
+alias dkmnt='df -h'
 
 # Conf Alias
 alias myalias='ne ~/.bashrc && source ~/.bashrc && rm -f ~/.bashrc~'
