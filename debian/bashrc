@@ -30,16 +30,16 @@ alias cdprg='cd ~/Programming'
 # Git Alias
 alias gitb='git branch'
 alias gito='git checkout'
-alias gitr='git rebase'
-alias gitm='git merge'
+alias gits='git status'
 alias gitl='git log'
 alias gitd='git diff'
 alias gita='git add'
 alias gitc='git commit'
 alias gitp='git push'
-
+alias gitm='git merge'
+alias gitr='git rebase'
 alias gitf='git fetch --all'
-alias gits='git status -uno'
+
 alias gitpf='git push --force-with-lease'
 
 alias gitsub='git submodule'
@@ -47,7 +47,7 @@ alias gitsup='git submodule update'
 
 alias gcurb='git rev-parse --abbrev-ref HEAD'
 alias gup='git fetch --all && git rebase origin/$(gcurb)'
-alias gprune='git remote prune origin'
+alias gprune='git prune ; git remote prune origin'
 alias gclean='git clean -fdx'
 
 # Git completions
@@ -89,7 +89,7 @@ alias mkj='make -j'
 alias crll='clear ; ll'
 alias crla='clear ; la'
 alias clean='rm -f *~ ; rm -f .*~ ; rm -f \#* ; rm -f .\#* ; rm -f *.o'
-alias ccll='clean && crll'
+alias ccll='clean ; crll'
 
 alias dksize='du -sh'
 alias dkmnt='df -h'
